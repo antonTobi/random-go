@@ -1,0 +1,38 @@
+2025-04-02 17:47:37+0200: Running with following config:
+logDir = analysis_logs
+maxVisits = 500
+nnCacheSizePowerOfTwo = 23
+nnMaxBatchSize = 64
+nnMutexPoolSizePowerOfTwo = 17
+nnRandomize = true
+numAnalysisThreads = 2
+numSearchThreads = 16
+reportAnalysisWinratesAs = BLACK
+
+2025-04-02 17:47:37+0200: Analysis Engine starting...
+2025-04-02 17:47:37+0200: KataGo v1.14.1
+2025-04-02 17:47:37+0200: nnRandSeed0 = 8556601262545196840
+2025-04-02 17:47:37+0200: After dedups: nnModelFile0 = C:\Users\Bob\Documents\KataGo\kata1-b18c384nbt-s9131461376-d4087399203.bin.gz useFP16 auto useNHWC auto
+2025-04-02 17:47:37+0200: Initializing neural net buffer to be size 19 * 19 allowing smaller boards
+2025-04-02 17:47:39+0200: Found OpenCL Platform 0: NVIDIA CUDA (NVIDIA Corporation) (OpenCL 3.0 CUDA 11.4.141)
+2025-04-02 17:47:39+0200: Found 1 device(s) on platform 0 with type CPU or GPU or Accelerator
+2025-04-02 17:47:39+0200: Found OpenCL Platform 1: AMD Accelerated Parallel Processing (Advanced Micro Devices, Inc.) (OpenCL 2.1 AMD-APP (3075.13))
+2025-04-02 17:47:39+0200: Found 1 device(s) on platform 1 with type CPU or GPU or Accelerator
+2025-04-02 17:47:39+0200: Found OpenCL Device 0: NVIDIA GeForce GTX 1650 (NVIDIA Corporation) (score 11000300)
+2025-04-02 17:47:39+0200: Found OpenCL Device 1: gfx902 (Advanced Micro Devices, Inc.) (score 11000200)
+2025-04-02 17:47:39+0200: Creating context for OpenCL Platform: NVIDIA CUDA (NVIDIA Corporation) (OpenCL 3.0 CUDA 11.4.141)
+2025-04-02 17:47:40+0200: Using OpenCL Device 0: NVIDIA GeForce GTX 1650 (NVIDIA Corporation) OpenCL 3.0 CUDA (Extensions: cl_khr_global_int32_base_atomics cl_khr_global_int32_extended_atomics cl_khr_local_int32_base_atomics cl_khr_local_int32_extended_atomics cl_khr_fp64 cl_khr_3d_image_writes cl_khr_byte_addressable_store cl_khr_icd cl_khr_gl_sharing cl_nv_compiler_options cl_nv_device_attribute_query cl_nv_pragma_unroll cl_nv_d3d10_sharing cl_khr_d3d10_sharing cl_nv_d3d11_sharing cl_nv_copy_opts cl_nv_create_buffer cl_khr_int64_base_atomics cl_khr_int64_extended_atomics cl_khr_device_uuid cl_khr_pci_bus_info)
+2025-04-02 17:47:40+0200: Loaded tuning parameters from: C:\Users\Bob\Documents\KataGo\katago-v1.14.1-opencl-windows-x64/KataGoData/opencltuning/tune11_gpuNVIDIAGeForceGTX1650_x19_y19_c384_mv14.txt
+2025-04-02 17:47:40+0200: OpenCL backend thread 0: Model version 14
+2025-04-02 17:47:40+0200: OpenCL backend thread 0: Model name: kata1-b18c384nbt-s9131461376-d4087399203
+2025-04-02 17:47:41+0200: OpenCL backend thread 0: FP16Storage true FP16Compute false FP16TensorCores false FP16TensorCoresFor1x1 false
+2025-04-02 17:47:41+0200: Loaded config C:\Users\Bob\Documents\KataGo\katago-v1.14.1-opencl-windows-x64\analysis_example.cfg
+2025-04-02 17:47:41+0200: Loaded model C:\Users\Bob\Documents\KataGo\kata1-b18c384nbt-s9131461376-d4087399203.bin.gz
+2025-04-02 17:47:41+0200: Analyzing up to 2 positions at a time in parallel
+2025-04-02 17:47:41+0200: Started, ready to begin handling requests
+2025-04-02 17:50:25+0200: C:\Users\Bob\Documents\KataGo\kata1-b18c384nbt-s9131461376-d4087399203.bin.gz
+2025-04-02 17:50:25+0200: NN rows: 15918
+2025-04-02 17:50:25+0200: NN batches: 7491
+2025-04-02 17:50:25+0200: NN avg batch size: 2.12495
+2025-04-02 17:50:25+0200: GPU -1 finishing, processed 15918 rows 7491 batches
+2025-04-02 17:50:25+0200: All cleaned up, quitting
