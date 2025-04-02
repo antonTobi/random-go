@@ -1,0 +1,12 @@
+# Exclude analysis logs
+/analysis_logs/
+
+# Common system files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo 

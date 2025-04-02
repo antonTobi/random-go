@@ -1,6 +1,6 @@
 '''
-This script is used to generate a list of random board positions that are balanced according to KataGo's evaluation.
-(query code is from query_analysis_engine_example.py in the KataGo repo)
+Script to batch generate random balanced opening positions.
+(query code is copied from https://github.com/lightvector/KataGo/blob/master/python/query_analysis_engine_example.py)
 '''
 
 import argparse
@@ -214,13 +214,15 @@ if __name__ == "__main__":
     boards_per_file = 100
     
     configurations = [
-        (19, 8, boards_per_file),
-        (19, 16, boards_per_file),
-        (13, 4, boards_per_file),
-        (13, 8, boards_per_file),
-        (9, 2, boards_per_file),
-        (9, 4, boards_per_file),
-        (9, 6, boards_per_file),
+        # (19, 8, boards_per_file),
+        # (19, 16, boards_per_file),
+        (19, 24, boards_per_file),
+        # (13, 4, boards_per_file),
+        # (13, 8, boards_per_file),
+        (13, 12, boards_per_file),
+        # (9, 2, boards_per_file),
+        # (9, 4, boards_per_file),
+        # (9, 6, boards_per_file),
     ]
     
     # Generate SGF files for each configuration
