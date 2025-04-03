@@ -214,15 +214,15 @@ if __name__ == "__main__":
     boards_per_file = 100
     
     configurations = [
-        # (19, 8, boards_per_file),
-        # (19, 16, boards_per_file),
+        (19, 8, boards_per_file),
+        (19, 16, boards_per_file),
         (19, 24, boards_per_file),
-        # (13, 4, boards_per_file),
-        # (13, 8, boards_per_file),
+        (13, 4, boards_per_file),
+        (13, 8, boards_per_file),
         (13, 12, boards_per_file),
-        # (9, 2, boards_per_file),
-        # (9, 4, boards_per_file),
-        # (9, 6, boards_per_file),
+        (9, 2, boards_per_file),
+        (9, 4, boards_per_file),
+        (9, 6, boards_per_file),
     ]
     
     # Generate SGF files for each configuration
