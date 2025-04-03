@@ -248,9 +248,9 @@
                     <li>9x9: <a href="https://online-go.com/review/1442931/2">2 moves</a>, <a href="https://online-go.com/review/1442932/4">4 moves</a>, <a href="https://online-go.com/review/1442933/6">6 moves</a></li>
                 </ul>
                 Simply open the corresponding review, scroll down to a random position in the game tree, and click "Fork game" in the sidebar to create a challenge. (Note that you need to be signed in to OGS for the fork option to be available)
-                <h3>How the positions are selected</h3>
+                <h3>How the positions are generated</h3>
                 <p>This tool works by selecting from a pre-generated list of positions. This means that if you keep hitting "New Position", you will eventually see some repeated positions! New positions will be added over time, so there should be no danger of running out of fresh positions to play.</p>
-                <p>The script that generates the positions is very simple: it selects positions at random (based on the given parameters) and then queries KataGo to see if the score evaluation is within &pm;0.5 points of equal (using Chinese rules and 7.0 komi).</p>
+                <p>The script that generates the positions simply plays random moves and then queries KataGo to see if the score evaluation is within &pm;0.3 points of equal (using Chinese rules and 7.0 komi).</p>
                 
                 <hr>
 
