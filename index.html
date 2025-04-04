@@ -252,6 +252,9 @@
                 <p>This tool works by selecting from a pre-generated list of positions. This means that if you keep hitting "New Position", you will eventually see some repeated positions! New positions will be added over time, so there should be no danger of running out of fresh positions to play.</p>
                 <p>The script that generates the positions simply plays random moves and then queries KataGo to see if the score evaluation is within &pm;0.3 points of equal (using Chinese rules and 7.0 komi).</p>
                 
+                <h3>Joseki Option</h3>
+                <p>The "Joseki" option under 19×19 shows balanced starting positions where black and white have an equal number of stones. These positions are carefully selected to ensure balanced game states and can be used for practicing joseki sequences and mid-game situations.</p>
+                
                 <hr>
 
                 <p>Please leave feedback or bug reports on <a href="https://github.com/antonTobi/random-go">GitHub</a> or in <a href="https://forums.online-go.com/t/random-opening-generator/56079">this forum thread</a>.</p>
@@ -291,7 +294,8 @@
             { name: '19×19', group: '19×19', options: [
                 { name: '8 moves', path: '19x19_8moves.sgf' },
                 { name: '16 moves', path: '19x19_16moves.sgf' },
-                { name: '24 moves', path: '19x19_24moves.sgf' }
+                { name: '24 moves', path: '19x19_24moves.sgf' },
+                { name: 'Joseki', path: 'joseki.sgf' }
             ]},
             { name: '13×13', group: '13×13', options: [
                 { name: '4 moves', path: '13x13_4moves.sgf' },
@@ -314,31 +318,32 @@
             };
             
             // Find the root node properties - match from start to first branch
-            let firstBranchIndex = sgfString.indexOf('(;B[');
+            let firstBranchIndex = sgfString.indexOf('(;', 2); // Skip the outermost parenthesis
+            
             if (firstBranchIndex === -1) {
-                firstBranchIndex = sgfString.indexOf('(;W[');
+                // If there are no branches, use the end of the file
+                firstBranchIndex = sgfString.length;
             }
             
-            if (firstBranchIndex > 0) {
-                const rootNodeContent = sgfString.substring(0, firstBranchIndex);
+            // Extract root node
+            const rootNodeContent = sgfString.substring(0, firstBranchIndex);
 
-                // Extract properties using regex
-                const propRegex = /([A-Z]+)\[(.*?)(?:\](?!\[))/g;
-                let propMatch;
-                
-                while ((propMatch = propRegex.exec(rootNodeContent)) !== null) {
-                    const key = propMatch[1];
-                    const value = propMatch[2];
-                    sgf.properties[key] = value;
-                }
+            // Extract properties using regex
+            const propRegex = /([A-Z]+)(\[.*?(?:\](?!\[)|\]))/g;
+            let propMatch;
+            
+            while ((propMatch = propRegex.exec(rootNodeContent)) !== null) {
+                const key = propMatch[1];
+                const value = propMatch[2].replace(/^\[|\]$/g, '');  // Remove brackets
+                sgf.properties[key] = value;
             }
             
             // Find all branches - look for specific branch start patterns
             const branches = [];
             const branchStarts = [];
             
-            // Find all starting positions of branches
-            const branchStartPattern = /\(;B\[|\(;W\[/g;
+            // Find all starting positions of branches (look for nodes starting with game properties, move properties or setup properties)
+            const branchStartPattern = /\(;(?:G|S|B|W|A[BW])/g;
             let match;
             
             while ((match = branchStartPattern.exec(sgfString)) !== null) {
@@ -367,18 +372,61 @@
                 
                 const branchContent = sgfString.substring(startIndex, endIndex);
 
-                // Extract moves from branch content
-                const moveRegex = /;([BW])\[(..)\]/g;
-                let moveMatch;
-                
-                while ((moveMatch = moveRegex.exec(branchContent)) !== null) {
-                    const color = moveMatch[1];
-                    const coord = moveMatch[2];
-                    branch.moves.push({
-                        color: color === 'B' ? 'black' : 'white',
-                        x: coord.charCodeAt(0) - 97,
-                        y: coord.charCodeAt(1) - 97
-                    });
+                // Check if branch uses AB/AW properties (setup stones) or B/W properties (moves)
+                const hasABProperty = branchContent.includes('AB[');
+                const hasAWProperty = branchContent.includes('AW[');
+
+                if (hasABProperty || hasAWProperty) {
+                    // Parse setup stones (AB/AW properties)
+                    // Extract black stones
+                    if (hasABProperty) {
+                        // Find all AB sections
+                        const abMatches = branchContent.match(/AB(\[..\])+/g) || [];
+                        for (const abSection of abMatches) {
+                            // Extract all coordinates within this AB section
+                            const coordMatches = abSection.match(/\[(..)]/g) || [];
+                            for (const coordMatch of coordMatches) {
+                                const coord = coordMatch.substring(1, 3);
+                                branch.moves.push({
+                                    color: 'black',
+                                    x: coord.charCodeAt(0) - 97,
+                                    y: coord.charCodeAt(1) - 97
+                                });
+                            }
+                        }
+                    }
+                    
+                    // Extract white stones
+                    if (hasAWProperty) {
+                        // Find all AW sections
+                        const awMatches = branchContent.match(/AW(\[..\])+/g) || [];
+                        for (const awSection of awMatches) {
+                            // Extract all coordinates within this AW section
+                            const coordMatches = awSection.match(/\[(..)]/g) || [];
+                            for (const coordMatch of coordMatches) {
+                                const coord = coordMatch.substring(1, 3);
+                                branch.moves.push({
+                                    color: 'white',
+                                    x: coord.charCodeAt(0) - 97,
+                                    y: coord.charCodeAt(1) - 97
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    // Extract moves from branch content (B/W properties)
+                    const moveRegex = /;([BW])\[(..)\]/g;
+                    let moveMatch;
+                    
+                    while ((moveMatch = moveRegex.exec(branchContent)) !== null) {
+                        const color = moveMatch[1];
+                        const coord = moveMatch[2];
+                        branch.moves.push({
+                            color: color === 'B' ? 'black' : 'white',
+                            x: coord.charCodeAt(0) - 97,
+                            y: coord.charCodeAt(1) - 97
+                        });
+                    }
                 }
                 
                 // Extract comment if present
@@ -392,6 +440,8 @@
                     branches.push(branch);
                 }
             }
+
+            branches.shift();
             
             sgf.branches = branches;
             return sgf;
@@ -589,17 +639,43 @@
                 sgfString += `${key}[${value}]`;
             });
             
-            // Add moves
+            // Group stones by color
+            const blackStones = [];
+            const whiteStones = [];
+            
             currentBranch.moves.forEach(move => {
-                const color = move.color === 'black' ? 'B' : 'W';
                 const x = String.fromCharCode(move.x + 97);
                 const y = String.fromCharCode(move.y + 97);
-                sgfString += `;${color}[${x}${y}]`;
+                const coord = `${x}${y}`;
+                
+                if (move.color === 'black') {
+                    blackStones.push(coord);
+                } else {
+                    whiteStones.push(coord);
+                }
             });
+            
+            // Add setup stones as AB/AW properties
+            if (blackStones.length > 0) {
+                sgfString += 'AB';
+                blackStones.forEach(coord => {
+                    sgfString += `[${coord}]`;
+                });
+            }
+            
+            if (whiteStones.length > 0) {
+                sgfString += 'AW';
+                whiteStones.forEach(coord => {
+                    sgfString += `[${coord}]`;
+                });
+            }
+            
+            // Set next player to black
+            sgfString += 'PL[B]';
             
             // Add position comment if available
             if (currentBranch.comment) {
-                sgfString += `;C[${currentBranch.comment}]`;
+                sgfString += `C[${currentBranch.comment}]`;
             }
             
             sgfString += ')';
