@@ -19,7 +19,7 @@
         #app {
             background-color: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 20px;
+            padding: 10px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -27,7 +27,7 @@
             max-width: 95vw;
             max-height: 95vh;
             min-width: 300px;
-            width: min(95vw, 95vh - 140px);
+            width: min(95vw, 95vh - 40px);
             height: 95vh;
             overflow: hidden; /* Prevent scrollbar */
         }
@@ -37,13 +37,13 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             position: relative;
         }
 
         .title {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 600;
             color: #2c3e50;
             margin: 0;
@@ -54,8 +54,8 @@
         .info-link {
             color: #2196F3;
             text-decoration: none;
-            font-size: 14px;
-            margin-top: 5px;
+            font-size: 12px;
+            margin-top: 2px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
@@ -143,7 +143,7 @@
 
         .board-wrapper {
             position: relative;
-            margin: 10px 0;
+            margin: 5px 0;
             width: 100%;
             display: flex;
             align-items: center;
@@ -164,26 +164,26 @@
         .controls {
             display: flex;
             justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             width: 100%;
         }
 
         select {
-            padding: 8px;
+            padding: 5px 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 13px;
             width: 200px;
         }
 
         button {
-            padding: 8px 16px;
+            padding: 6px 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             white-space: nowrap;
         }
 
@@ -199,7 +199,8 @@
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 5px;
+            flex-shrink: 0;
         }
         .bottom-buttons .retry-mode {
             background-color: #ff9800;
@@ -210,40 +211,40 @@
 
         .custom-controls {
             width: 100%;
-            margin-bottom: 6px;
+            margin-bottom: 3px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         .custom-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 4px;
+            gap: 8px;
+            margin-bottom: 2px;
         }
         .custom-row label {
-            font-size: 13px;
+            font-size: 12px;
             color: #2c3e50;
             white-space: nowrap;
         }
         .custom-row input[type="number"] {
-            width: 45px;
-            padding: 3px 6px;
+            width: 40px;
+            padding: 2px 4px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 12px;
         }
         .size-buttons {
             display: flex;
-            gap: 4px;
+            gap: 3px;
         }
         .size-btn {
-            padding: 6px 16px;
+            padding: 4px 12px;
             background-color: #e0e0e0;
             color: #333;
             border: 1px solid #ccc;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
         }
         .size-btn.active {
             background-color: #4CAF50;
