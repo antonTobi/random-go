@@ -1,5 +1,6 @@
 # Exclude analysis logs
 /analysis_logs/
+/plots/
 
 # Common system files
 .DS_Store
