@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 100svh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,10 +25,10 @@
             align-items: center;
             box-sizing: border-box;
             max-width: 95vw;
-            max-height: 95vh;
+            max-height: 100svh;
             min-width: 300px;
-            width: min(95vw, 95vh - 40px);
-            height: 95vh;
+            width: min(95vw, 100svh - 40px);
+            height: 100svh;
             overflow: hidden; /* Prevent scrollbar */
         }
 
@@ -37,13 +37,13 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             position: relative;
         }
 
         .title {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 600;
             color: #2c3e50;
             margin: 0;
@@ -54,8 +54,8 @@
         .info-link {
             color: #2196F3;
             text-decoration: none;
-            font-size: 12px;
-            margin-top: 2px;
+            font-size: 11px;
+            margin-top: 1px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
@@ -143,13 +143,6 @@
 
         .board-wrapper {
             position: relative;
-            margin: 5px 0;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            min-height: 0;
         }
 
         canvas {
@@ -157,23 +150,23 @@
             border: 1px solid #000;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
-            width: 100%;
-            height: 100%;
         }
 
         .controls {
             display: flex;
             justify-content: center;
-            margin-bottom: 5px;
             width: 100%;
+        }
+        .controls select {
+            margin-bottom: 5px;
         }
 
         select {
-            padding: 5px 8px;
+            padding: 4px 6px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 13px;
-            width: 200px;
+            font-size: 12px;
+            width: 180px;
         }
 
         button {
@@ -211,14 +204,13 @@
 
         .custom-controls {
             width: 100%;
-            margin-bottom: 3px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         .custom-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 2px;
         }
         .custom-row label {
@@ -238,7 +230,7 @@
             gap: 3px;
         }
         .size-btn {
-            padding: 4px 12px;
+            padding: 3px 10px;
             background-color: #e0e0e0;
             color: #333;
             border: 1px solid #ccc;
@@ -648,26 +640,37 @@
         }
         
         function resizeCanvas() {
-            // Get the board wrapper size
-            const boardWrapper = document.querySelector('.board-wrapper');
-            const size = Math.min(boardWrapper.clientWidth, boardWrapper.clientHeight);
+            const app = document.getElementById('app');
+            const padT = parseInt(getComputedStyle(app).paddingTop);
+            const padB = parseInt(getComputedStyle(app).paddingBottom);
+            const padL = parseInt(getComputedStyle(app).paddingLeft);
+            const padR = parseInt(getComputedStyle(app).paddingRight);
             
-            // Calculate the cell size to fit in the available space
-            // We want padding = cellSize, so the total size needs to be cellSize * (boardSize + 1)
-            const cellSize = Math.floor(size / (boardSize + 1));
+            const availW = app.clientWidth - padL - padR;
+            const availH = app.clientHeight - padT - padB;
             
-            // Calculate the total canvas size needed
+            // Sum heights of all children except the board-wrapper
+            // For hidden elements (display:none), offsetHeight is 0
+            let usedH = 0;
+            for (let i = 0; i < app.children.length; i++) {
+                const child = app.children[i];
+                if (child.classList.contains('board-wrapper')) continue;
+                usedH += child.offsetHeight;
+            }
+            // Add gap margins between elements (tiny spacing)
+            usedH += 6;
+            
+            const maxSize = Math.min(availW, availH - usedH);
+            if (maxSize <= 0) return;
+            
+            const cellSize = Math.floor(maxSize / (boardSize + 1));
             const canvasSize = cellSize * (boardSize + 1);
             
-            // Set canvas size for display
             canvas.style.width = `${canvasSize}px`;
             canvas.style.height = `${canvasSize}px`;
-            
-            // Set actual canvas size for crisp rendering
             canvas.width = canvasSize;
             canvas.height = canvasSize;
             
-            // Draw the board and stones
             drawBoard(canvasSize, cellSize);
             if (customErrorMessage) {
                 drawErrorMessage(canvasSize, cellSize);
