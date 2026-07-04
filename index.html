@@ -37,13 +37,13 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
             position: relative;
         }
 
         .title {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 600;
             color: #2c3e50;
             margin: 0;
@@ -54,8 +54,8 @@
         .info-link {
             color: #2196F3;
             text-decoration: none;
-            font-size: 11px;
-            margin-top: 1px;
+            font-size: 12px;
+            margin-top: 2px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
@@ -155,28 +155,26 @@
         .controls {
             display: flex;
             justify-content: center;
-            width: 100%;
-        }
-        .controls select {
             margin-bottom: 5px;
+            width: 100%;
         }
 
         select {
-            padding: 4px 6px;
+            padding: 5px 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 12px;
-            width: 180px;
+            font-size: 13px;
+            width: 200px;
         }
 
         button {
-            padding: 6px 12px;
+            padding: 8px 16px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             white-space: nowrap;
         }
 
@@ -192,7 +190,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin-top: 5px;
+            margin-top: 10px;
             flex-shrink: 0;
         }
         .bottom-buttons .retry-mode {
@@ -204,33 +202,34 @@
 
         .custom-controls {
             width: 100%;
+            margin-bottom: 3px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         .custom-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            margin-bottom: 2px;
+            gap: 8px;
+            margin-bottom: 4px;
         }
         .custom-row label {
-            font-size: 12px;
+            font-size: 13px;
             color: #2c3e50;
             white-space: nowrap;
         }
         .custom-row input[type="number"] {
-            width: 40px;
-            padding: 2px 4px;
+            width: 45px;
+            padding: 3px 6px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 13px;
         }
         .size-buttons {
             display: flex;
-            gap: 3px;
+            gap: 4px;
         }
         .size-btn {
-            padding: 3px 10px;
+            padding: 4px 12px;
             background-color: #e0e0e0;
             color: #333;
             border: 1px solid #ccc;
@@ -658,7 +657,8 @@
                 usedH += child.offsetHeight;
             }
             // Add gap margins between elements (tiny spacing)
-            usedH += 6;
+            // Account for margins between flex children (not included in offsetHeight)
+            usedH += 24;
             
             const maxSize = Math.min(availW, availH - usedH);
             if (maxSize <= 0) return;
