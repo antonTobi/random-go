@@ -146,13 +146,16 @@
 
         .board-wrapper {
             position: relative;
+            overflow: hidden;
         }
 
         canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: 0 0;
             display: block;
             border: 1px solid #000;
-            /* image-rendering: pixelated; */
-            /* image-rendering: crisp-edges; */
         }
 
         .controls {
@@ -705,21 +708,33 @@
             const maxSize = Math.min(availW, availH - usedH);
             if (maxSize <= 0) return;
 
-            const cellSize = Math.floor(maxSize / (boardSize + 1));
-            const canvasSize = cellSize * (boardSize + 1);
-            const dpr = window.devicePixelRatio
+            const dpr = window.devicePixelRatio;
 
-            canvas.style.width = `${canvasSize}px`;
-            canvas.style.height = `${canvasSize}px`;
+            // Compute grid in physical pixels (like example.html: PHYS_W / PHYS_H)
+            const physMaxSize = maxSize * dpr;
+            const cellSize = Math.floor(physMaxSize / (boardSize + 1));
+            const physCanvasSize = cellSize * (boardSize + 1);
+
+            // Visual size after transform: physCanvasSize / dpr CSS pixels
+            const visualSize = physCanvasSize / dpr;
+
+            // Size the board-wrapper to the visual size so layout is correct
+            const boardWrapper = document.querySelector('.board-wrapper');
+            boardWrapper.style.width = `${visualSize}px`;
+            boardWrapper.style.height = `${visualSize}px`;
+
+            // Backing store and CSS box both use physical pixel count
+            canvas.width = physCanvasSize;
+            canvas.height = physCanvasSize;
+            canvas.style.width = `${physCanvasSize}px`;
+            canvas.style.height = `${physCanvasSize}px`;
             canvas.style.transform = `scale(${1 / dpr})`;
-            canvas.width = Math.round(canvasSize * dpr)
-            canvas.height = Math.round(canvasSize * dpr)
 
-            drawBoard(canvasSize, cellSize);
+            drawBoard(physCanvasSize, cellSize);
             if (customErrorMessage) {
-                drawErrorMessage(canvasSize, cellSize);
+                drawErrorMessage(physCanvasSize, cellSize);
             } else if (currentBranch) {
-                drawStones(canvasSize, cellSize);
+                drawStones(physCanvasSize, cellSize);
             }
         }
 
