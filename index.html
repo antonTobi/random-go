@@ -26,10 +26,12 @@
             align-items: center;
             box-sizing: border-box;
             max-width: 95vw;
-            max-height: 100svh;
+            max-height: calc(100svh - 20px);
             min-width: 300px;
-            width: min(95vw, 100svh - 40px);
-            height: 100svh;
+            width: min(95vw, calc(100svh - 40px));
+            height: calc(100svh - 20px);
+            margin: 10px auto;
+            border-radius: 8px;
             overflow: hidden;
             /* Prevent scrollbar */
         }
@@ -260,6 +262,25 @@
         .size-btn:hover:not(.active) {
             background-color: #d0d0d0;
         }
+
+        .coordinates-row {
+            margin-top: 5px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 13px;
+            color: #2c3e50;
+            flex-shrink: 0;
+        }
+
+        .coordinates-row label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .coordinates-row input[type="checkbox"] {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -295,6 +316,13 @@
 
         <div class="board-wrapper">
             <canvas id="board"></canvas>
+        </div>
+
+        <div class="coordinates-row">
+            <label>
+                <input type="checkbox" id="showCoordinates">
+                Coordinates
+            </label>
         </div>
 
         <div class="bottom-buttons">
@@ -803,6 +831,7 @@
 
             // Make stones slightly smaller than the cell size to prevent overlapping
             const stoneRadius = cellSize * 0.45;
+            const showCoord = document.getElementById('showCoordinates').checked;
 
             currentBranch.moves.forEach(stone => {
                 // Apply same pixel alignment to stones
@@ -815,6 +844,20 @@
                 ctx.fill();
                 ctx.strokeStyle = stone.color === 'black' ? '#000' : '#888';
                 ctx.stroke();
+
+                if (showCoord) {
+                    // Convert to Go coordinates: A1 at bottom-left, skip I
+                    const letter = String.fromCharCode(65 + stone.x + (stone.x >= 8 ? 1 : 0));
+                    const number = boardSize - stone.y;
+                    const label = `${letter}${number}`;
+
+                    const fontSize = Math.floor(stoneRadius * 0.9);
+                    ctx.font = `bold ${fontSize}px 'Segoe UI', system-ui, sans-serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = stone.color === 'black' ? '#fff' : '#000';
+                    ctx.fillText(label, x, y);
+                }
             });
         }
 
@@ -825,7 +868,8 @@
                 customSize: document.querySelector('.size-btn.active').dataset.size,
                 customBlack: document.getElementById('blackCount').value,
                 customWhite: document.getElementById('whiteCount').value,
-                customSpacing: document.getElementById('spacing').value
+                customSpacing: document.getElementById('spacing').value,
+                showCoordinates: document.getElementById('showCoordinates').checked
             };
             try {
                 localStorage.setItem('randomGoState', JSON.stringify(state));
@@ -853,6 +897,11 @@
             if (state.customBlack !== undefined) document.getElementById('blackCount').value = state.customBlack;
             if (state.customWhite !== undefined) document.getElementById('whiteCount').value = state.customWhite;
             if (state.customSpacing !== undefined) document.getElementById('spacing').value = state.customSpacing;
+
+            // Restore coordinates checkbox
+            if (state.showCoordinates !== undefined) {
+                document.getElementById('showCoordinates').checked = state.showCoordinates;
+            }
 
             // Restore dropdown selection (handled after options are populated)
             return state.selectedSgf;
@@ -1055,6 +1104,7 @@
                 saveState();
             });
             document.getElementById('downloadSgf').addEventListener('click', downloadSgf);
+            document.getElementById('showCoordinates').addEventListener('change', resizeCanvas);
 
             // Custom controls event listeners
             document.querySelectorAll('.size-btn').forEach(btn => {
