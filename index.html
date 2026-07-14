@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
 
         #app {
             background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 10px 15px;
             display: flex;
             flex-direction: column;
@@ -29,7 +30,8 @@
             min-width: 300px;
             width: min(95vw, 100svh - 40px);
             height: 100svh;
-            overflow: hidden; /* Prevent scrollbar */
+            overflow: hidden;
+            /* Prevent scrollbar */
         }
 
         .title-container {
@@ -71,7 +73,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             align-items: center;
             justify-content: center;
         }
@@ -80,7 +82,7 @@
             background-color: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 90%;
             max-height: 80vh;
@@ -132,7 +134,8 @@
             margin: 10px 0;
         }
 
-        .modal-body ul, .modal-body ol {
+        .modal-body ul,
+        .modal-body ol {
             margin: 10px 0;
             padding-left: 20px;
         }
@@ -148,8 +151,8 @@
         canvas {
             display: block;
             border: 1px solid #000;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
+            /* image-rendering: pixelated; */
+            /* image-rendering: crisp-edges; */
         }
 
         .controls {
@@ -193,9 +196,11 @@
             margin-top: 10px;
             flex-shrink: 0;
         }
+
         .bottom-buttons .retry-mode {
             background-color: #ff9800;
         }
+
         .bottom-buttons .retry-mode:hover {
             background-color: #f57c00;
         }
@@ -205,6 +210,7 @@
             margin-bottom: 3px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
+
         .custom-row {
             display: flex;
             align-items: center;
@@ -212,11 +218,13 @@
             gap: 8px;
             margin-bottom: 4px;
         }
+
         .custom-row label {
             font-size: 13px;
             color: #2c3e50;
             white-space: nowrap;
         }
+
         .custom-row input[type="number"] {
             width: 45px;
             padding: 3px 6px;
@@ -224,10 +232,12 @@
             border-radius: 4px;
             font-size: 13px;
         }
+
         .size-buttons {
             display: flex;
             gap: 4px;
         }
+
         .size-btn {
             padding: 4px 12px;
             background-color: #e0e0e0;
@@ -237,16 +247,19 @@
             cursor: pointer;
             font-size: 12px;
         }
+
         .size-btn.active {
             background-color: #4CAF50;
             color: white;
             border-color: #4CAF50;
         }
+
         .size-btn:hover:not(.active) {
             background-color: #d0d0d0;
         }
     </style>
 </head>
+
 <body>
     <div id="app">
         <div class="title-container">
@@ -258,7 +271,7 @@
                 <!-- Options will be populated by JavaScript -->
             </select>
         </div>
-        
+
         <div id="customControls" class="custom-controls" style="display: none;">
             <div class="custom-row">
                 <div class="size-buttons">
@@ -276,17 +289,17 @@
                 <input type="number" id="spacing" value="1" min="0" max="5">
             </div>
         </div>
-        
+
         <div class="board-wrapper">
             <canvas id="board"></canvas>
         </div>
-        
+
         <div class="bottom-buttons">
             <button id="newPosition">New Position</button>
             <button id="downloadSgf" class="download-button">Download SGF</button>
         </div>
     </div>
-    
+
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -305,27 +318,48 @@
                 <h3>How to play on OGS</h3>
                 To save you the steps of downloading and uploading the SGF file to OGS, you can use these links instead:
                 <ul>
-                    <li>19x19: <a href="https://online-go.com/review/1442892/8">8 moves</a>, <a href="https://online-go.com/review/1442897/16">16 moves</a>, <a href="https://online-go.com/review/1442927/24">24 moves</a>, <a href="https://online-go.com/review/1443864/18">Joseki</a></li>
-                    <li>13x13: <a href="https://online-go.com/review/1442928/4">4 moves</a>, <a href="https://online-go.com/review/1442929/8">8 moves</a>, <a href="https://online-go.com/review/1442930/12">12 moves</a></li>
-                    <li>9x9: <a href="https://online-go.com/review/1442931/2">2 moves</a>, <a href="https://online-go.com/review/1442932/4">4 moves</a>, <a href="https://online-go.com/review/1442933/6">6 moves</a></li>
+                    <li>19x19: <a href="https://online-go.com/review/1442892/8">8 moves</a>, <a
+                            href="https://online-go.com/review/1442897/16">16 moves</a>, <a
+                            href="https://online-go.com/review/1442927/24">24 moves</a>, <a
+                            href="https://online-go.com/review/1443864/18">Joseki</a></li>
+                    <li>13x13: <a href="https://online-go.com/review/1442928/4">4 moves</a>, <a
+                            href="https://online-go.com/review/1442929/8">8 moves</a>, <a
+                            href="https://online-go.com/review/1442930/12">12 moves</a></li>
+                    <li>9x9: <a href="https://online-go.com/review/1442931/2">2 moves</a>, <a
+                            href="https://online-go.com/review/1442932/4">4 moves</a>, <a
+                            href="https://online-go.com/review/1442933/6">6 moves</a></li>
                 </ul>
-                Simply open the corresponding review, scroll down to a random position in the game tree, and click "Fork game" in the sidebar to create a challenge. (Note that you need to be signed in to OGS for the fork option to be available)
+                Simply open the corresponding review, scroll down to a random position in the game tree, and click "Fork
+                game" in the sidebar to create a challenge. (Note that you need to be signed in to OGS for the fork
+                option to be available)
                 <h3>How the positions are generated</h3>
-                <p>This tool works by selecting from a pre-generated list of positions. This means that if you keep hitting "New Position", you will eventually see some repeated positions. (Currently there are 100 positions for each setting.)</p>
-                <p>The script that generates the positions simply plays random moves and then queries KataGo to see if the score evaluation is within &pm;0.3 points of equal (using Chinese rules and 7.0 komi).</p>
-                <p>The "Joseki" positions are from the OGS joseki dictionary (thanks to lightvector for providing these!), and they have also been filtered to only include fair positions.</p>
-                
+                <p>This tool works by selecting from a pre-generated list of positions. This means that if you keep
+                    hitting "New Position", you will eventually see some repeated positions. (Currently there are 100
+                    positions for each setting.)</p>
+                <p>The script that generates the positions simply plays random moves and then queries KataGo to see if
+                    the score evaluation is within &pm;0.3 points of equal (using Chinese rules and 7.0 komi).</p>
+                <p>The "Joseki" positions are from the OGS joseki dictionary (thanks to lightvector for providing
+                    these!), and they have also been filtered to only include fair positions.</p>
+
                 <h3>Custom positions</h3>
-                <p>If you select "Custom" from the dropdown menu, you can set your own parameters. These positions are generated directly in your browser, and there is no KataGo query to ensure fairness.</p>
-                <p>To play a handicap game with random placements, I recommend setting spacing to 1 and to generate one more stone than with normal handicap. For example: if you are 3 ranks stronger than your opponent, they get 4 randomly placed stones on the 19x19 board.</p>
-                <p>(Randomly placed stones are on average worth slightly less than starpoints, but not by much, so this handicap is generally worth more than the normal handicap, if you ask KataGo. However, the extra complexity of random placements probably favors the stronger player, so I believe this "normal handicap + 1" rule to be relatively fair in practice.)</p>
+                <p>If you select "Custom" from the dropdown menu, you can set your own parameters. These positions are
+                    generated directly in your browser, and there is no KataGo query to ensure fairness.</p>
+                <p>To play a handicap game with random placements, I recommend setting spacing to 1 and to generate one
+                    more stone than with normal handicap. For example: if you are 3 ranks stronger than your opponent,
+                    they get 4 randomly placed stones on the 19x19 board.</p>
+                <p>(Randomly placed stones are on average worth slightly less than starpoints, but not by much, so this
+                    handicap is generally worth more than the normal handicap, if you ask KataGo. However, the extra
+                    complexity of random placements probably favors the stronger player, so I believe this "normal
+                    handicap + 1" rule to be relatively fair in practice.)</p>
                 <hr>
 
-                <p>Please leave feedback or bug reports on <a href="https://github.com/antonTobi/random-go">GitHub</a> or in <a href="https://forums.online-go.com/t/random-opening-generator/56079">this forum thread</a>.</p>
+                <p>Please leave feedback or bug reports on <a href="https://github.com/antonTobi/random-go">GitHub</a>
+                    or in <a href="https://forums.online-go.com/t/random-opening-generator/56079">this forum thread</a>.
+                </p>
             </div>
         </div>
     </div>
-    
+
     <script>
         // Global variables
         const canvas = document.getElementById('board');
@@ -335,49 +369,57 @@
         let currentBranch = null;
         let isCustomMode = false;
         let customErrorMessage = null;
-        
+
         // Modal functions
         const modal = document.getElementById('infoModal');
         const infoButton = document.getElementById('infoButton');
         const closeButton = document.getElementById('closeModal');
-        
+
         infoButton.addEventListener('click', () => {
             modal.style.display = 'flex';
         });
-        
+
         closeButton.addEventListener('click', () => {
             modal.style.display = 'none';
         });
-        
+
         window.addEventListener('click', (event) => {
             if (event.target === modal) {
                 modal.style.display = 'none';
             }
         });
-        
+
         // List of available SGF files
         const sgfFiles = [
-            { name: '19×19', group: '19×19', options: [
-                { name: '8 moves', path: '19x19_8moves.sgf' },
-                { name: '16 moves', path: '19x19_16moves.sgf' },
-                { name: '24 moves', path: '19x19_24moves.sgf' },
-                { name: 'Joseki', path: 'joseki.sgf' }
-            ]},
-            { name: '13×13', group: '13×13', options: [
-                { name: '4 moves', path: '13x13_4moves.sgf' },
-                { name: '8 moves', path: '13x13_8moves.sgf' },
-                { name: '12 moves', path: '13x13_12moves.sgf' }
-            ]},
-            { name: '9×9', group: '9×9', options: [
-                { name: '2 moves', path: '9x9_2moves.sgf' },
-                { name: '4 moves', path: '9x9_4moves.sgf' },
-                { name: '6 moves', path: '9x9_6moves.sgf' }
-            ]},
-            { name: 'Custom', group: 'Custom', options: [
-                { name: 'Custom', path: 'custom' }
-            ]}
+            {
+                name: '19×19', group: '19×19', options: [
+                    { name: '8 moves', path: '19x19_8moves.sgf' },
+                    { name: '16 moves', path: '19x19_16moves.sgf' },
+                    { name: '24 moves', path: '19x19_24moves.sgf' },
+                    { name: 'Joseki', path: 'joseki.sgf' }
+                ]
+            },
+            {
+                name: '13×13', group: '13×13', options: [
+                    { name: '4 moves', path: '13x13_4moves.sgf' },
+                    { name: '8 moves', path: '13x13_8moves.sgf' },
+                    { name: '12 moves', path: '13x13_12moves.sgf' }
+                ]
+            },
+            {
+                name: '9×9', group: '9×9', options: [
+                    { name: '2 moves', path: '9x9_2moves.sgf' },
+                    { name: '4 moves', path: '9x9_4moves.sgf' },
+                    { name: '6 moves', path: '9x9_6moves.sgf' }
+                ]
+            },
+            {
+                name: 'Custom', group: 'Custom', options: [
+                    { name: 'Custom', path: 'custom' }
+                ]
+            }
         ];
-        
+
         // SGF parsing function
         function parseSgf(sgfString) {
             // Create our root SGF object
@@ -385,40 +427,40 @@
                 properties: {},
                 branches: []
             };
-            
+
             // Find the root node properties - match from start to first branch
             let firstBranchIndex = sgfString.indexOf('(;', 2); // Skip the outermost parenthesis
-            
+
             if (firstBranchIndex === -1) {
                 // If there are no branches, use the end of the file
                 firstBranchIndex = sgfString.length;
             }
-            
+
             // Extract root node
             const rootNodeContent = sgfString.substring(0, firstBranchIndex);
 
             // Extract properties using regex
             const propRegex = /([A-Z]+)(\[.*?(?:\](?!\[)|\]))/g;
             let propMatch;
-            
+
             while ((propMatch = propRegex.exec(rootNodeContent)) !== null) {
                 const key = propMatch[1];
                 const value = propMatch[2].replace(/^\[|\]$/g, '');  // Remove brackets
                 sgf.properties[key] = value;
             }
-            
+
             // Find all branches - look for specific branch start patterns
             const branches = [];
             const branchStarts = [];
-            
+
             // Find all starting positions of branches (look for nodes starting with game properties, move properties or setup properties)
             const branchStartPattern = /\(;(?:G|S|B|W|A[BW])/g;
             let match;
-            
+
             while ((match = branchStartPattern.exec(sgfString)) !== null) {
                 branchStarts.push(match.index);
             }
-            
+
             // Process each branch by finding its closing parenthesis
             for (let i = 0; i < branchStarts.length; i++) {
                 const startIndex = branchStarts[i];
@@ -428,17 +470,17 @@
                     moves: [],
                     comment: null
                 };
-                
+
                 // Extract the branch content by finding the matching closing parenthesis
                 let depth = 1;
                 let endIndex = startIndex + 1;
-                
+
                 while (depth > 0 && endIndex < sgfString.length) {
                     if (sgfString[endIndex] === '(') depth++;
                     if (sgfString[endIndex] === ')') depth--;
                     endIndex++;
                 }
-                
+
                 const branchContent = sgfString.substring(startIndex, endIndex);
 
                 // Check if branch uses AB/AW properties (setup stones) or B/W properties (moves)
@@ -464,7 +506,7 @@
                             }
                         }
                     }
-                    
+
                     // Extract white stones
                     if (hasAWProperty) {
                         // Find all AW sections
@@ -486,7 +528,7 @@
                     // Extract moves from branch content (B/W properties)
                     const moveRegex = /;([BW])\[(..)\]/g;
                     let moveMatch;
-                    
+
                     while ((moveMatch = moveRegex.exec(branchContent)) !== null) {
                         const color = moveMatch[1];
                         const coord = moveMatch[2];
@@ -497,21 +539,21 @@
                         });
                     }
                 }
-                
+
                 // Extract comment if present
                 const commentRegex = /C\[(.*?)(?:\](?!\[))/;
                 const commentMatch = commentRegex.exec(branchContent);
                 if (commentMatch) {
                     branch.comment = commentMatch[1];
                 }
-                
+
                 if (branch.moves.length > 0) {
                     branches.push(branch);
                 }
             }
 
             branches.shift();
-            
+
             sgf.branches = branches;
             return sgf;
         }
@@ -521,14 +563,14 @@
                 console.error('No SGF loaded');
                 return;
             }
-            
+
             // Update board size based on SGF properties
             if (currentSgf.properties.SZ) {
                 const sizeStr = currentSgf.properties.SZ;
                 // Handle both "9" and "9:9" formats
-                boardSize = parseInt(sizeStr.split(':')[0]);    
+                boardSize = parseInt(sizeStr.split(':')[0]);
             }
-            
+
             // Get all branches
             const branches = currentSgf.branches;
             if (!branches || branches.length === 0) {
@@ -543,16 +585,16 @@
             // Resize and redraw
             resizeCanvas();
         }
-        
+
         function generateCustomPosition(maxAttempts) {
             if (maxAttempts === undefined) maxAttempts = 100;
-            
+
             const boardSizeVal = parseInt(document.querySelector('.size-btn.active').dataset.size);
             const spacing = parseInt(document.getElementById('spacing').value) || 0;
             const blackCount = parseInt(document.getElementById('blackCount').value) || 0;
             const whiteCount = parseInt(document.getElementById('whiteCount').value) || 0;
             const totalToPlace = blackCount + whiteCount;
-            
+
             // Validate total stones against board capacity
             if (totalToPlace > boardSizeVal * boardSizeVal) {
                 customErrorMessage = 'Too many stones for board size';
@@ -567,11 +609,11 @@
                 resizeCanvas();
                 return;
             }
-            
+
             customErrorMessage = null;
             document.getElementById('newPosition').textContent = 'New Position';
             document.getElementById('newPosition').classList.remove('retry-mode');
-            
+
             for (let attempt = 0; attempt < maxAttempts; attempt++) {
                 // Build list of valid positions, excluding the outer margin (capped at 2)
                 const edgeMargin = Math.min(2, spacing);
@@ -581,17 +623,17 @@
                         freeNodes.push({ x, y, free: true });
                     }
                 }
-                
+
                 const picked = [];
                 let available = freeNodes.slice();
                 let placed = 0;
-                
+
                 while (placed < totalToPlace && available.length > 0) {
                     const idx = Math.floor(Math.random() * available.length);
                     const node = available[idx];
                     picked.push(node);
                     placed++;
-                    
+
                     // Mark node and all nodes within square radius as not free
                     for (const other of available) {
                         if (Math.abs(other.x - node.x) <= spacing && Math.abs(other.y - node.y) <= spacing) {
@@ -600,20 +642,20 @@
                     }
                     available = available.filter(n => n.free);
                 }
-                
+
                 if (placed >= totalToPlace) {
                     // Shuffle picked nodes for fair color distribution
                     for (let i = picked.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [picked[i], picked[j]] = [picked[j], picked[i]];
                     }
-                    
+
                     const stones = picked.map((node, i) => ({
                         color: i < blackCount ? 'black' : 'white',
                         x: node.x,
                         y: node.y
                     }));
-                    
+
                     boardSize = boardSizeVal;
                     currentBranch = { moves: stones };
                     currentSgf = {
@@ -624,7 +666,7 @@
                     return;
                 }
             }
-            
+
             // Failed after all attempts
             boardSize = boardSizeVal;
             customErrorMessage = 'No valid position found';
@@ -637,17 +679,17 @@
             };
             resizeCanvas();
         }
-        
+
         function resizeCanvas() {
             const app = document.getElementById('app');
             const padT = parseInt(getComputedStyle(app).paddingTop);
             const padB = parseInt(getComputedStyle(app).paddingBottom);
             const padL = parseInt(getComputedStyle(app).paddingLeft);
             const padR = parseInt(getComputedStyle(app).paddingRight);
-            
+
             const availW = app.clientWidth - padL - padR;
             const availH = app.clientHeight - padT - padB;
-            
+
             // Sum heights of all children except the board-wrapper
             // For hidden elements (display:none), offsetHeight is 0
             let usedH = 0;
@@ -659,18 +701,20 @@
             // Add gap margins between elements (tiny spacing)
             // Account for margins between flex children (not included in offsetHeight)
             usedH += 24;
-            
+
             const maxSize = Math.min(availW, availH - usedH);
             if (maxSize <= 0) return;
-            
+
             const cellSize = Math.floor(maxSize / (boardSize + 1));
             const canvasSize = cellSize * (boardSize + 1);
-            
+            const dpr = window.devicePixelRatio
+
             canvas.style.width = `${canvasSize}px`;
             canvas.style.height = `${canvasSize}px`;
-            canvas.width = canvasSize;
-            canvas.height = canvasSize;
-            
+            canvas.style.transform = `scale(${1 / dpr})`;
+            canvas.width = Math.round(canvasSize * dpr)
+            canvas.height = Math.round(canvasSize * dpr)
+
             drawBoard(canvasSize, cellSize);
             if (customErrorMessage) {
                 drawErrorMessage(canvasSize, cellSize);
@@ -678,40 +722,40 @@
                 drawStones(canvasSize, cellSize);
             }
         }
-        
+
         function drawBoard(size, cellSize) {
             // Clear canvas
             ctx.fillStyle = '#DEB887'; // Board color
             ctx.fillRect(0, 0, size, size);
-            
+
             // Padding is equal to cellSize
             const padding = cellSize;
-            
+
             // Calculate the actual grid size with integer cell size
             const gridSize = cellSize * (boardSize - 1);
-            
+
             // Draw grid lines
             ctx.beginPath();
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 1;
-            
+
             for (let i = 0; i < boardSize; i++) {
                 // Vertical lines - add 0.5 for pixel alignment
                 const x = Math.floor(padding + i * cellSize) + 0.5;
                 ctx.moveTo(x, padding + 0.5);
                 ctx.lineTo(x, padding + gridSize + 0.5);
-                
+
                 // Horizontal lines - add 0.5 for pixel alignment
                 const y = Math.floor(padding + i * cellSize) + 0.5;
                 ctx.moveTo(padding + 0.5, y);
                 ctx.lineTo(padding + gridSize + 0.5, y);
             }
-            
+
             ctx.stroke();
-            
+
             // Draw star points based on board size
             ctx.fillStyle = '#000';
-            
+
             let starPoints;
             if (boardSize === 19) {
                 starPoints = [3, 9, 15];
@@ -721,9 +765,9 @@
                 starPoints = [2, 4, 6];
             } else {
                 // For other sizes, use a simple pattern
-                starPoints = [Math.floor(boardSize/4), Math.floor(boardSize/2), Math.floor(3*boardSize/4)];
+                starPoints = [Math.floor(boardSize / 4), Math.floor(boardSize / 2), Math.floor(3 * boardSize / 4)];
             }
-            
+
             for (let i = 0; i < starPoints.length; i++) {
                 for (let j = 0; j < starPoints.length; j++) {
                     // Apply same pixel alignment to star points
@@ -735,21 +779,21 @@
                 }
             }
         }
-        
+
         function drawStones(size, cellSize) {
             if (!currentBranch || !currentBranch.moves) return;
-            
+
             // Padding is equal to cellSize
             const padding = cellSize;
-            
+
             // Make stones slightly smaller than the cell size to prevent overlapping
             const stoneRadius = cellSize * 0.45;
-            
+
             currentBranch.moves.forEach(stone => {
                 // Apply same pixel alignment to stones
                 const x = Math.floor(padding + stone.x * cellSize) + 0.5;
                 const y = Math.floor(padding + stone.y * cellSize) + 0.5;
-                
+
                 ctx.beginPath();
                 ctx.arc(x, y, stoneRadius, 0, 2 * Math.PI);
                 ctx.fillStyle = stone.color;
@@ -758,7 +802,7 @@
                 ctx.stroke();
             });
         }
-        
+
         // localStorage helpers
         function saveState() {
             const state = {
@@ -770,21 +814,21 @@
             };
             try {
                 localStorage.setItem('randomGoState', JSON.stringify(state));
-            } catch (e) {}
+            } catch (e) { }
         }
-        
+
         function restoreState() {
             let stateStr;
             try {
                 stateStr = localStorage.getItem('randomGoState');
             } catch (e) { return; }
             if (!stateStr) return;
-            
+
             let state;
             try {
                 state = JSON.parse(stateStr);
             } catch (e) { return; }
-            
+
             // Restore custom parameters (always)
             if (state.customSize) {
                 document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
@@ -794,30 +838,30 @@
             if (state.customBlack !== undefined) document.getElementById('blackCount').value = state.customBlack;
             if (state.customWhite !== undefined) document.getElementById('whiteCount').value = state.customWhite;
             if (state.customSpacing !== undefined) document.getElementById('spacing').value = state.customSpacing;
-            
+
             // Restore dropdown selection (handled after options are populated)
             return state.selectedSgf;
         }
-        
+
         // Event handlers
         async function loadSgfFiles() {
             const sgfSelect = document.getElementById('sgfFile');
             sgfSelect.innerHTML = '';
-            
+
             sgfFiles.forEach(group => {
                 const optgroup = document.createElement('optgroup');
                 optgroup.label = group.group;
-                
+
                 group.options.forEach(option => {
                     const opt = document.createElement('option');
                     opt.value = option.path;
                     opt.textContent = option.name;
                     optgroup.appendChild(opt);
                 });
-                
+
                 sgfSelect.appendChild(optgroup);
             });
-            
+
             // Restore dropdown selection from localStorage
             const savedSgf = restoreState();
             if (savedSgf) {
@@ -827,7 +871,7 @@
                     sgfSelect.value = savedSgf;
                 }
             }
-            
+
             // Handle initial selection
             if (sgfSelect.value === 'custom') {
                 isCustomMode = true;
@@ -837,7 +881,7 @@
                 await loadSgfFile(sgfSelect.value);
             }
         }
-        
+
         async function loadSgfFile(filePath) {
             try {
                 const response = await fetch(filePath);
@@ -852,37 +896,37 @@
                 alert('Failed to load SGF file. Please check the console for details.');
             }
         }
-        
+
         function downloadSgf() {
             if (!currentBranch || !currentSgf) return;
-            
+
             // Extract root properties from original SGF
             const rootProps = currentSgf.properties;
-            
+
             // Create new SGF with just this position
             let sgfString = '(;';
-            
+
             // Add root properties
             Object.entries(rootProps).forEach(([key, value]) => {
                 sgfString += `${key}[${value}]`;
             });
-            
+
             // Group stones by color
             const blackStones = [];
             const whiteStones = [];
-            
+
             currentBranch.moves.forEach(move => {
                 const x = String.fromCharCode(move.x + 97);
                 const y = String.fromCharCode(move.y + 97);
                 const coord = `${x}${y}`;
-                
+
                 if (move.color === 'black') {
                     blackStones.push(coord);
                 } else {
                     whiteStones.push(coord);
                 }
             });
-            
+
             // Add setup stones as AB/AW properties
             if (blackStones.length > 0) {
                 sgfString += 'AB';
@@ -890,24 +934,24 @@
                     sgfString += `[${coord}]`;
                 });
             }
-            
+
             if (whiteStones.length > 0) {
                 sgfString += 'AW';
                 whiteStones.forEach(coord => {
                     sgfString += `[${coord}]`;
                 });
             }
-            
+
             // Set next player to black
             sgfString += 'PL[B]';
-            
+
             // Add position comment if available
             if (currentBranch.comment) {
                 sgfString += `C[${currentBranch.comment}]`;
             }
-            
+
             sgfString += ')';
-            
+
             // Create filename based on selected SGF file path and position
             let fileName;
             if (isCustomMode) {
@@ -919,7 +963,7 @@
                 const sgfSelect = document.getElementById('sgfFile');
                 const selectedPath = sgfSelect.value;
                 const baseFileName = selectedPath.replace(/\.sgf$/, '');
-                
+
                 let positionSuffix = "";
                 if (currentBranch.comment) {
                     const positionMatch = currentBranch.comment.match(/Position #(\d+)/i);
@@ -929,10 +973,10 @@
                         positionSuffix = "_position";
                     }
                 }
-                
+
                 fileName = `${baseFileName}${positionSuffix}.sgf`;
             }
-            
+
             // Create and trigger download
             const blob = new Blob([sgfString], { type: 'application/x-go-sgf' });
             const url = URL.createObjectURL(blob);
@@ -944,7 +988,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-        
+
         function drawErrorMessage(size, cellSize) {
             const text = customErrorMessage;
             ctx.font = `bold ${Math.floor(cellSize * 0.7)}px 'Segoe UI', system-ui, sans-serif`;
@@ -956,22 +1000,22 @@
             const boxH = Math.floor(cellSize * 0.7) + pad * 2;
             const boxX = textX - boxW / 2;
             const boxY = textY - boxH / 2;
-            
+
             ctx.fillStyle = 'rgba(255,255,255,0.85)';
             ctx.beginPath();
             ctx.roundRect(boxX, boxY, boxW, boxH, 6);
             ctx.fill();
-            
+
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(text, textX, textY);
         }
-        
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadSgfFiles();
-            
+
             document.getElementById('newPosition').addEventListener('click', () => {
                 if (isCustomMode) {
                     const isRetry = document.getElementById('newPosition').classList.contains('retry-mode');
@@ -996,7 +1040,7 @@
                 saveState();
             });
             document.getElementById('downloadSgf').addEventListener('click', downloadSgf);
-            
+
             // Custom controls event listeners
             document.querySelectorAll('.size-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -1018,10 +1062,11 @@
                 if (isCustomMode) generateCustomPosition();
                 saveState();
             });
-            
+
             // Add window resize handler
             window.addEventListener('resize', resizeCanvas);
         });
     </script>
 </body>
-</html> 
+
+</html>

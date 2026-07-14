@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Pixel-perfect canvas checkerboard</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #808080;
+        }
+
+        #board {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: 0 0;
+            /* image-rendering: pixelated; */
+            /* belt-and-braces: forces nearest-neighbor
+                                    sampling if any residual sub-pixel
+                                    mismatch ever remains */
+        }
+
+        #info {
+            position: fixed;
+            right: 8px;
+            bottom: 8px;
+            font: 12px/1.4 monospace;
+            color: #fff;
+            background: rgba(0, 0, 0, .5);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="board"></canvas>
+    <div id="info"></div>
+    <script>
+        const canvas = document.getElementById('board');
+        const ctx = canvas.getContext('2d');
+        const info = document.getElementById('info');
+
+        // Physical pixel size of the checkerboard. Arbitrary — does not need to
+        // relate to devicePixelRatio in any way.
+        const PHYS_W = 300
+        const PHYS_H = 300
+
+        function render() {
+            const dpr = window.devicePixelRatio;
+
+            // 1. Backing store = exactly PHYS_W x PHYS_H *physical* pixels.
+            canvas.width = PHYS_W;
+            canvas.height = PHYS_H;
+
+            // 2. Give the element's CSS box an exact INTEGER size in CSS pixels.
+            //    Crucially: no division by dpr here, so there is nothing for the
+            //    layout engine to round or snap to its internal fixed-point
+            //    sub-pixel grid.
+            canvas.style.width = PHYS_W + 'px';
+            canvas.style.height = PHYS_H + 'px';
+
+            // 3. Shrink it visually by exactly 1/dpr using a transform instead of a
+            //    CSS width/height. Transforms are resolved with full floating-point
+            //    precision at composite time (not through layout's fixed-point
+            //    rounding), so dpr * (1/dpr) cancels back out to essentially exactly
+            //    1 physical pixel per backing-store pixel, however ugly dpr is.
+            canvas.style.transform = `scale(${1 / dpr})`;
+
+            // 4. Paint a genuine 1-physical-pixel checkerboard straight into the
+            //    backing store (raw pixel buffer, so there's no antialiasing to
+            //    worry about).
+            const img = ctx.createImageData(PHYS_W, PHYS_H);
+            const d = img.data;
+            for (let y = 0; y < PHYS_H; y++) {
+                for (let x = 0; x < PHYS_W; x++) {
+                    let v = 0
+                    let s = 1
+                    if ((x % (2 * s) < s) ^ (y % (2 * s) < s)) v = 255
+                    const i = (y * PHYS_W + x) * 4;
+                    d[i] = d[i + 1] = d[i + 2] = v;
+                    d[i + 3] = 255;
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+
+            info.textContent = `devicePixelRatio: ${dpr}`;
+        }
+
+        render();
+
+        // Re-render whenever the *effective* devicePixelRatio changes: browser
+        // zoom, dragging the window to a monitor with different OS scaling, etc.
+        (function watchDPR() {
+            const mq = matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+            mq.addEventListener('change', () => { render(); watchDPR(); }, { once: true });
+        })();
+    </script>
+</body>
+
+</html>
